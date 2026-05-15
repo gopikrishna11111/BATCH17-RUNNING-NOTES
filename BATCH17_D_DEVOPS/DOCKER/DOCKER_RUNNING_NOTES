@@ -1695,3 +1695,182 @@ docker run -d \
   react-app
 
 
+===========================================================================================
+
+
+DATE: 15 MAY 2026
+
+SonarQube is a popular open-source platform used for continuous inspection of code quality. It helps developers detect bugs, code smells, and security vulnerabilities in their code before it goes to production.
+
+Purpose of SonarQube
+
+     Code Quality Management: Ensures code follows best practices.
+     
+     Bug Detection: Finds potential runtime errors early. ( NULL POINTER ) 
+	 
+     Maintainability: Detects “code smells,” which are parts of the code that are poorly written or hard to maintain.
+     
+     Security: Identifies vulnerabilities to prevent security issues.
+     
+     Technical Debt Tracking: Shows how much “debt” your code has (i.e., areas that need refactoring).
+	 
+	 9000
+Key Features
+
+       Multi-language Support: Works with Java, C#, JavaScript, Python, PHP, and many more.
+       
+       Static Code Analysis: Examines code without running it.
+       
+       Automated Reports: Generates dashboards and reports to visualize code quality.
+       
+       Integration: Works with CI/CD tools like Jenkins, GitHub Actions, GitLab CI, etc.
+       
+       Custom Rules: Allows you to define coding rules specific to your project or organization.
+	   
+	   Analyze for Issues: It checks for:
+
+         Bugs, Vulnerabilities, Code smells, Duplicated code, Complexity
+		 
+		 
+		 
+1 Static Code Analysis
+
+SonarQube scans source code for:
+
+    Category	             Examples
+			
+    Bugs	                Null pointer, memory leaks (Problems likely to break application.)
+    Vulnerabilities	        SQL injection, hardcoded secrets (Security risks) 
+    Code Smells	            Duplicate code, long methods (Bad coding practices.) 
+    Coverage              	Unit test coverage
+    Duplications	        Repeated logic
+            
+ 
+Severity Levels 🚨
+
+Each rule has severity:
+
+
+        Blocker -->	Very dangerous
+        Critical -->Serious issue
+        Major -->   Important
+        Minor -->  	Small issue
+        Info	    Suggestion
+
+==================================== 
+Quality profiles
+Quality profiles are collections of rules to apply during an analysis. For each language, there is a default profile. 
+
+
+
+Quality Gate:
+
+        Condition	                   Required
+        Coverage	                     > 80%
+        Blocker bugs	                  0
+        Critical vulnerabilities	      0
+        Duplicated code	                 < 5%
+ 
+ ==============================================
+ 
+ 
+            Quality Profile
+      (Rules to Analyze Code)
+                    ↓
+             SonarQube Scan
+                    ↓
+          Issues + Metrics Found
+                    ↓
+             Quality Gate
+          (Pass / Fail Decision)
+                    ↓
+            CI/CD Pipeline
+ 
+ 
+ 
+ ========== 
+ docker pull sonarqube
+ 
+ docker run -itd --name soanr_ct -p 9000:9000 sonar
+ ===========================
+docker pull jenkins/jenkins:lts
+docker run -itd --name jenkins_ct -p 8080:8080 jenkins/jenkins:lts
+
+
+
+to build code :
+mvn clean install 
+
+to scan code :
+
+mvn sonar:sonar
+    http://54.80.12.156:9000/
+    token  -- squ_634ed45086db19f4e38c72ff961a635eb3aae1de
+  
+  
+ 
+
+In cicd integration , one of stage:
+
+ 
+		stage('sonarqube scan') {
+            steps {
+                echo 'This stage scans the code using sonarqube'
+                
+                sh ''' mvn sonar:sonar \\
+                      -Dsonar.host.url=http://54.80.12.156:9000 \\
+                      -Dsonar.login=squ_634ed45086db19f4e38c72ff961a635eb3aae1de'''
+            }
+    	}	
+==================================
+
+
+PIPELINE 
+
+pipeline {
+    agent any
+	
+	tools {
+	
+	maven 'Maven_3.9.15'
+	}
+
+    stages {
+	
+        stage('checkout') {
+            steps {
+                echo 'git checkout stage'
+				git branch: 'main', url: 'https://github.com/devopstraininghub/mindcircuit17d.git'
+            }
+        }
+
+ 		stage('sonarqube scan') {
+            steps {
+                echo 'This stage scans the code using sonarqube'
+                
+                sh ''' mvn sonar:sonar \\
+                      -Dsonar.host.url=http://54.80.12.156:9000 \\
+                      -Dsonar.login=squ_634ed45086db19f4e38c72ff961a635eb3aae1de'''
+            }
+    	}
+
+
+        stage('build') {
+            steps {
+                echo 'Building with maven '
+				sh 'mvn clean install '
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying to tomcat'
+	//			deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'tomcat', path: '', url: 'http://54.160.144.88:8081/')], contextPath: 'insta', war: '**/*.war'
+				
+            }
+        }		
+		
+    }
+}
+
+
