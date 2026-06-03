@@ -1087,3 +1087,69 @@ kubectl apply  -f pod.yaml -n kirannamespace
 kubectl get pods --all-namespaces
 
 =========================================
+
+history:
+ cd 3-june26/
+  507  ll
+  508  kubectl apply -f 2-fb-deploy_V1.yaml
+  509  kubectl get all
+  510  kubectl get po
+  511  kubectl get po -o wide
+  512  kubectl get po -o wide
+  513  kubectl exec -it fb-deploy-cb496c7bc-cvvb2 -- bash
+  514  ll
+  515  kubectl apply -f 4-lb-svc.yaml
+  516  kubectl get all
+  517  kubectl get svc
+  518  kubectl get svc
+  519  ll
+  520  kubectl apply -f 3-fb-deploy_V2.yaml
+  521  kubectl get all
+  522  kubectl exec -it fb-deploy-7f9d4f8dd9-88bj9 -- bash
+  523  kubectl rollout undo deploy fb-deploy
+  524  kubectl describe deploy fb-deploy
+  525  kubectl get svc
+  526  ll
+  527  kubectl apply -f 5-cip-svc.yaml
+  528  kubectl get svc
+  529  kubectl get svc
+  530  kubectl get po
+  531  kubectl exec -it fb-deploy-cb496c7bc-49nzl -- bash
+  532  ll
+  533  kubectl apply -f 6-nodeport-svc.yaml
+  534  kubectl get svc
+  535  kubectl get svc
+  536  kubectl delete all --all
+  537  ll
+  538  pwd
+  539  cd ../1june2026/
+  540  ll
+  541  cat 1-pod.yaml
+  542  kubectl apply -f 1-pod.yaml
+  543  kubectl apply -f 1-pod.yaml
+  544  kubectl describe po fb-pod
+  545  kubectl create ns dev
+  546  kubectl create ns QA
+  547  kubectl create ns qa
+  548  kubectl create ns uat
+  549  kubectl create ns prod
+  550  kubectl get ns
+  551  ll
+  552  kubectl apply -f 1-pod.yaml -n qa
+  553  kubectl apply -f 1-pod.yaml -n prod
+  554  kubectl get po
+  555  kubectl get po -n qa
+  556  kubectl get po -n prod
+  557  kubectl get po --all-namespaces
+  558  kubectl create ns preprod
+  559  ll
+  560  kubectl apply -f 1-pod.yaml -n preprod
+  561  kubectl get po --all-namespaces
+  562  kubectl apply -f 1-pod.yaml
+  563  kubectl get ns
+  564  kubectl apply -f 1-pod.yaml
+  565  kubectl get po -n uat
+  566  kubectl get po --all-namespaces
+  567  kubectl get ns
+  568  eksctl get cluster
+  569  eksctl delete cluster b17d
