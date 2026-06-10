@@ -1283,6 +1283,8 @@ spec:
           value: MindCircuit 
     
 
+===
+
 =====================
 
 ConfigMap
@@ -1358,3 +1360,143 @@ decode:
 echo -n "QXdzIERldk9wcw==" | base64 --decode
 echo -n "TWFkaHVraXJuYSBnb3Jla2Fy" | base64 -d
 ==================================
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mc-secret
+type: Opaque
+data:
+  Course: QVdTIERldk9wcw==
+  Trainer: TWFkaHVraXJhbiBHb3Jla2Fy
+  Institute: TWluZENpcmN1aXQ=
+
+
+============================
+
+--- 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secret-ex-pod 
+
+spec: 
+  containers:
+    - name: insta-pod-cont
+      image: devopshubg333/batch16d:fb_httpd
+
+      envFrom:
+        - secretRef:
+            name: mc-secret
+
+=================================================================
+
+
+kubectl get secret 
+
+=============================================================================
+Real time scenarios : 
+
+configmap:
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_ENV: "production"
+  LOG_LEVEL: "info"
+
+---------------------------------------------
+( username : myuser 
+  password : mypassword  ) 
+  
+echo -n "myuser" | base64
+bXl1c2Vy
+
+echo -n "mypassword" | base64
+bXlwYXNzd29yZA==
+
+
+
+secret:
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+type: Opaque
+data:
+  DB_USER: bXl1c2Vy
+  DB_PASSWORD: bXlwYXNzd29yZA==
+
+
+--------------------------------------------------
+Deployment/pod : 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: myapp:1.0
+        env:
+          - name: SERVICE_NAME
+            value: "user-service"
+        envFrom:
+          - configMapRef:
+              name: app-config
+          - secretRef:
+              name: db-secret
+
+
+==========================================================================
+
+
+
+
+------------------------------------------------
+CLUSTER UPGRADE in K8S 
+=====================================================================
+
+======================================
+
+=============================
+LABELS vs ANNOTATIONS in K8S 
+
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fbpod
+  labels:
+    app: facebook
+	env: lab
+	
+  annotations:
+    imageregistry: "https://hub.docker.com/"
+    build-url: "https://jenkins.example.com/build/142"
+	prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+	
+	
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+
+
+=============================
