@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fb-liveness-pod
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+   
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 8082
+      initialDelaySeconds: 5  #wait for 5 seconds before starting the probe
+      periodSeconds: 10 #run for every 10 seconds
+      failureThreshold: 3 #after 3 failures, the pod will be restarted
+
+
+      ## kubectl exec -it fb-liveness-pod -- bash 
+      ##   curl localhost:80

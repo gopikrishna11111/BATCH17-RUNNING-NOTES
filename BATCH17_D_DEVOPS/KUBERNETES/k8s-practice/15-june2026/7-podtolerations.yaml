@@ -1,7 +1,7 @@
   apiVersion: v1
   kind: Pod
   metadata:
-    name: db-pod
+    name: db-nginx-pod
   spec:
     tolerations:
     - key: "dedicated"
@@ -9,5 +9,5 @@
       value: "database"
       effect: "NoSchedule"
     containers:
-    - name: mysql
-      image: mysql
+    - name: nginx
+      image: nginx
