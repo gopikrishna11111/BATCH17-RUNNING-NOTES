@@ -2350,7 +2350,7 @@ no
 
 
 =================================================================================================
-
+DATE: 22 JUNE 2026
 
 KUBERNETES EKS IAM USER ACCESS – 
 
@@ -2359,21 +2359,16 @@ Create an EKS cluster
 Create IAM users
 
 
-kiran 
 
-arn:aws:iam::14155xxxxxxxxx2:user/kiran
-AKIASB5xxxxxxxxxxxxxxxxxxx
-67cSP+czMzNG7ADwB0bxxxxxxxxxxxxxxxxxxxx
 
 madhu 
 
-arn:aws:iam::14155xxxxx2:user/madhu
-AKIASB5M6Cxxxxxxxxxxxxxxxx
-n/sws6jKFHziAXjfggcxxxxxxxxxxxxxxxxxxxxxxxx
+kiran
+
 
 
 ========================
-b16-eks-describe-policy
+b17-eks-describe-policy
 
 {
     "Version": "2012-10-17",
@@ -2390,9 +2385,9 @@ b16-eks-describe-policy
 
 ===========================
 
-Map those IAM users to Kubernetes using the aws-auth ConfigMap (kube-system) 
+Map above IAM users to Kubernetes using the aws-auth ConfigMap (kube-system) 
 
-Assign permissions (edit, view) to each user
+Assign permissions (edit, view) to each user using RBAC 
 
 Verify access using kubectl
 
@@ -2402,7 +2397,7 @@ STEPS:
 
 CREATING THE EKS CLUSTER WITH EKSCTL
 
-     eksctl create cluster --name b16dcluster  --nodegroup-name b16ng --node-type t3.micro --nodes 4 --managed
+     eksctl create cluster --name b17dcluster  --nodegroup-name b17ng --node-type t3.micro --nodes 4 --managed
 
 
 What this does:
@@ -2422,13 +2417,17 @@ What this does:
            kubectl get nodes
 		   
 
-CREATING IAM USERS IN AWS (MADHU AND RAMANI)
+CREATING IAM USERS IN AWS (MADHU AND KIRAN)
 
 Two IAM users were created in the AWS IAM console:
 
 User: madhu
+AKIA5FQ3NZV5WGAWDIMA
+H8KWyWXyYqDhhwFXV2o7n7HrwEAhcoIUZhd/ZvPW
 
 User: kiran
+AKIA5FQ3NZV5WDS2F46J
+8gDcezZdIAvgY9FkRq/4eDtcaYvT+qPxhFoWyane
 
 For each user:
 
@@ -2632,16 +2631,6 @@ With IRSA:
 - Create an IAM Role that ONLY has "s3:GetObject" permissions.
 - Attach it to the Pod using a ServiceAccount annotation.
 - Only that Pod gets S3 permissions. No other Pod gets those permissions.
-
-
-
-
-
-
-
-
-
-
 
 
 

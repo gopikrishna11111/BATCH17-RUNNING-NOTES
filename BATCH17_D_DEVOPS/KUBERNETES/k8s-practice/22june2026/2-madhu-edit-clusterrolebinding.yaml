@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: madhu-edit-clusterrolebinding
+subjects:
+  - kind: User
+    name: madhu    # must match the username in aws-auth
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: edit     # predefined 
+  apiGroup: rbac.authorization.k8s.io
+
