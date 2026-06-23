@@ -2633,6 +2633,63 @@ With IRSA:
 - Attach it to the Pod using a ServiceAccount annotation.
 - Only that Pod gets S3 permissions. No other Pod gets those permissions.
 
+================================================
+
+
+DATE: 23 JUNE 26
+
+AWS CLOUD BASICS
+
+AWS --> CLOUD 
+
+datacenter
+
+region 
+av-zone ( NV - US-EAST-1 (1a,1b,1c,1d,1e,1f) 
+
+Amazon Elastic Compute Cloud (EC2)
+
+ELB 
+
+ASG 
+
+vpc (cidr - 10.81.0.0/16 ) ---> subnet --  public subnet , pvt subnet , igw , route table , nat gateway
+
+Website ( Domain name)  ---> LB / Cloud Front (CDN)
+
+route 53 --> dns service by AWS 
+
+EBS (BLOCK)
+
+EFS (FILE)
+
+S3 BUCKET (OBJECT)
+
+DATABASE : 
+
+DB AS A SERVICE ( RDS )
+
+
+IAM ( USERS , GROUPS, POLICIES  )
+
+IAM ROLE 
+
+KUBERNETS ( CLUSTER AS A SERVICE - EKS )
+=====================================================
+
+pv & pvc 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
